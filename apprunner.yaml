@@ -10,10 +10,3 @@ run:
   command: npm start
   network:
     port: 5000
-  env:
-    - name: NODE_ENV
-      value: production
-    - name: DATABASE_URL
-      value: mysql+pymysql://admin:AKumawat8437@menteetracker.cfiuwyek2vbk.ap-south-1.rds.amazonaws.com:3306/nowest_interior
-    - name: SESSION_SECRET
-      value: nowest-interior-production-secret-2024
