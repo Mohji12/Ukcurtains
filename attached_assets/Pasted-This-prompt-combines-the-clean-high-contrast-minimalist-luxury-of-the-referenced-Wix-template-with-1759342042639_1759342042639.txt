@@ -1,0 +1,74 @@
+This prompt combines the clean, high-contrast, minimalist luxury of the referenced Wix template with the requirement for advanced, immersive, mobile-first animations focused specifically on custom curtains.
+
+---
+
+## Final Advanced Design Prompt: "The Unveiled Collection" Luxury Curtains
+
+This design brief requires the highest level of sophistication in both aesthetic execution and animated interaction. The final website must feel like a premium digital magazine or gallery, where content is revealed with the elegance of a curtain draw.
+
+### 1. Aesthetic Foundation (Inspired by Wix Template)
+
+The site must adopt a foundation of ultra-clean, minimalist design to ensure the complex animations do not feel cluttered or overwhelming.
+
+* **Color Palette:** Dominated by a crisp, high-contrast scheme: **Pure White** background, **Deep Charcoal/Black** text, and **One Refined Metallic Accent** (e.g., Brushed Gold or Matte Bronze) used *only* for subtle interaction cues and key CTAs.
+* **Typography:**
+    * **Headlines/Serif:** An extremely elegant, legible, high-contrast serif (e.g., Bodoni, Lora) for brand presence.
+    * **Body/Sans-Serif:** A clean, modern sans-serif (e.g., Montserrat, Lato) for readability on mobile screens.
+* **Photography:** All imagery must be of museum quality: sharp, well-lit, and focusing on the texture and drape of the fabric. Images should be given vast negative space.
+* **UI Minimalism:** Navigation and secondary elements (borders, dividers) should be extremely subtle, often fading in and out based on user action (e.g., scroll-triggered hide/show for the bottom navigation bar).
+
+### 2. Core Mandate: Mobile-First & Hyper-Animation
+
+**100% Mobile-First:** The experience must be designed and prototyped for a 375px mobile viewport first. Desktop design should be an expansion, not the starting point.
+
+#### A. The Signature "Drape Effect" (Advanced Portfolio Transition)
+
+This is the central visual language of the site. It replaces all standard transitions.
+
+* **Function:** When a user navigates between projects, scrolls down the main portfolio grid, or clicks a thumbnail to view a detail page, the outgoing content must be replaced by an animation that mimics the physical action of fabric movement.
+* **Mechanism:**
+    * **Gathering Reveal:** The outgoing screen content should *visually* gather towards the center or one side, as if being pulled up or drawn back on a track, revealing the new content **seamlessly** underneath.
+    * **Texture Warp:** The image transition should include a subtle, custom shader or filter that briefly distorts the image like fabric moving, enhancing the tactile illusion.
+* **Speed:** Animations must be fast (200-400ms) but fluid, providing a feeling of luxury and responsiveness, not sluggishness.
+
+#### B. Fabric Immersion Detail View (Micro-Interaction)
+
+On every Project Detail page, the static image is replaced by dynamic content.
+
+* **Scroll-Triggered Fabric Unfurl:** As the user scrolls down the project detail page, the large hero image should appear to slightly **unfurl or drop** into its final position.
+* **Interactive Light/Luminosity Toggle:** Implement a small, metallic accent icon (e.g., a stylized sun or lightbulb) that, when tapped or held on mobile, cycles the lighting condition of the displayed curtain image/render (e.g., "Daylight," "Twilight," "Artificial Light"). This demonstrates the fabric's true luminosity and texture.
+* **Animated Detail Hotspots:** Key curtain components (pleats, hardware, motorized track) should be visually highlighted with a subtle, pulsating metallic outline. Tapping these hotspots triggers a smooth, **animated zoom and pan** over the area, accompanied by a concise, animated text label.
+
+### 3. Page-by-Page Requirements
+
+#### Home Page: The Grand Entrance
+
+* **Animated Hero:** A full-screen, ultra-high-definition video loop or carousel (no more than 3 slides) of curtains in motion (wind, motorization, or hand-drawn). The company name and tagline should animate in with an elegant typography effect (e.g., letters appearing with a subtle, shimmering light effect).
+* **The Unveiling Scroll:** The transition from the Hero section to the main content must use a dramatic "Drape Effect," where the video panel collapses like a curtain being drawn, revealing the rest of the page content.
+* **Signature Services Grid:** A 3-column grid (on desktop) collapsing to a 1-column scroll (on mobile) detailing the specialized services (e.g., Motorized Systems, Bespoke Fabrication, Expert Consultation). Each service title should animate into view upon scrolling.
+* **Featured Project Teasers:** A brief section showcasing the top three projects using the **Drape Effect** transition between each project card as the user scrolls horizontally or vertically.
+
+#### Portfolio Page: The Gallery of Motion
+
+* **Dynamic Filtering:** Filters (e.g., Sheers, Blackout, Style, Room) presented as an elegant, horizontally scrollable ribbon at the top. Selecting a filter should trigger the **Drape Effect** to transition the grid into the newly filtered state.
+* **Animated Project Grid:** A masonry-style layout. As the user scrolls, each thumbnail should not just fade in, but gently **scale up (0.9 to 1.0)** and visually *draw* itself onto the screen, like a fabric panel dropping into place.
+* **Tap Interaction:** Tapping a thumbnail uses the **Drape Effect** to transition to the Project Detail Page.
+
+#### The Process Page: The Journey of Luxury
+
+* **Animated Timeline:** Use a central, animated vertical line to represent the journey. As the user scrolls down, the line should appear to be *drawn* in real-time.
+* **Step Visualization:** Each step (e.g., Consultation, Design, Fabrication) is represented by a large, elegant numeral and a high-quality, full-width image or animated illustration. The text description for each step should animate in, word by word, as the user reaches that section.
+* **Interactive CTA:** The final step must feature a prominent, sticky "Book Your Consultation" button, animated with the metallic accent color.
+
+#### Consultation/Contact Page
+
+* **Form Design:** A multi-step, premium form. Each field entry should trigger a small, satisfying micro-animation (e.g., the field label elegantly slides out of the way, the border line briefly glows the accent color).
+* **Client Intake Focus:** Prioritize collecting high-quality information (e.g., Project Scope, Timeline, Budget Range) over collecting basic data.
+* **Hidden Contact Info:** Primary contact methods (phone, email) should only be fully revealed after a small, subtle animated interaction (e.g., tapping an "envelope" icon causes the email address to slowly fade in).
+
+### 4. Technical and Deliverables
+
+* **Performance Priority:** Must be highly optimized. Utilize techniques like WebGL/GSAP for high-performance animations, optimized media compression, and lazy loading for all images/videos.
+* **Prototype:** Deliver an interactive prototype (e.g., Figma, InVision) demonstrating the **Drape Effect** and the **Fabric Immersion Detail View** interactions on a mobile viewport.
+* **Deliverables:** Full set of Mobile Mockups (Home, Portfolio, Detail, Process), Desktop Mockups, and a comprehensive Style Guide detailing all colors, fonts, and animation specifications.
+* **Accessibility Note:** All animated content must have proper alt-text and fallbacks for users who prefer reduced motion.

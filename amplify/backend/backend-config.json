@@ -1,0 +1,29 @@
+{
+  "backend": {
+    "plugins": {
+      "awscloudformation": {
+        "Region": "ap-south-1",
+        "DeploymentBucketName": "amplify-nowestinterior-dev-123456-deployment",
+        "UnauthRoleName": "amplify-nowestinterior-dev-123456-unauthRole",
+        "StackName": "amplify-nowestinterior-dev-123456",
+        "StackId": "arn:aws:cloudformation:ap-south-1:123456789012:stack/amplify-nowestinterior-dev-123456/12345678-1234-1234-1234-123456789012",
+        "AuthRoleName": "amplify-nowestinterior-dev-123456-authRole",
+        "UnauthRoleArn": "arn:aws:iam::123456789012:role/amplify-nowestinterior-dev-123456-unauthRole",
+        "AuthRoleArn": "arn:aws:iam::123456789012:role/amplify-nowestinterior-dev-123456-authRole"
+      }
+    }
+  },
+  "hosting": {
+    "S3AndCloudFront": {
+      "service": "S3AndCloudFront",
+      "providerPlugin": "awscloudformation"
+    }
+  },
+  "function": {
+    "nowestInteriorAPI": {
+      "service": "Lambda",
+      "providerPlugin": "awscloudformation",
+      "build": true
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "lambdaLayers": [],
+  "permissions": {
+    "api": {
+      "nowestInteriorAPI": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    }
+  },
+  "environmentMap": {
+    "api": {
+      "nowestInteriorAPI": {
+        "DATABASE_URL": "mysql+pymysql://admin:AKumawat8437@menteetracker.cfiuwyek2vbk.ap-south-1.rds.amazonaws.com:3306/nowest_interior",
+        "SESSION_SECRET": "nowest-interior-session-secret-2024-production",
+        "NODE_ENV": "production",
+        "AWS_REGION": "ap-south-1"
+      }
+    }
+  }
+}
