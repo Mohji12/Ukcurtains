@@ -35,11 +35,22 @@ elif [ "$1" = "ec2" ]; then
 elif [ "$1" = "apprunner" ]; then
     echo "🏃 Deploying to App Runner..."
     echo "Please follow the App Runner deployment steps in AWS_DEPLOYMENT_GUIDE.md"
+elif [ "$1" = "serverless" ]; then
+    echo "⚡ Deploying to AWS Lambda (Serverless)..."
+    npx serverless deploy --stage ${2:-dev}
+elif [ "$1" = "docker" ]; then
+    echo "🐳 Building and testing Docker container..."
+    docker build -t nowest-interior .
+    echo "✅ Docker image built successfully!"
+    echo "To run locally: docker run -p 5000:5000 nowest-interior"
+    echo "To deploy to AWS ECS/Fargate, push to ECR and create service"
 else
     echo "📋 Available deployment options:"
-    echo "  ./deploy.sh eb        - Deploy to Elastic Beanstalk"
-    echo "  ./deploy.sh ec2       - Deploy to EC2 (manual steps required)"
-    echo "  ./deploy.sh apprunner - Deploy to App Runner (manual steps required)"
+    echo "  ./deploy.sh eb          - Deploy to Elastic Beanstalk"
+    echo "  ./deploy.sh ec2         - Deploy to EC2 (manual steps required)"
+    echo "  ./deploy.sh apprunner   - Deploy to App Runner (manual steps required)"
+    echo "  ./deploy.sh serverless  - Deploy to AWS Lambda (Serverless)"
+    echo "  ./deploy.sh docker      - Build Docker container"
     echo ""
     echo "For detailed instructions, see AWS_DEPLOYMENT_GUIDE.md"
 fi

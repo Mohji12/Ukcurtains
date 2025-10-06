@@ -3,9 +3,11 @@ frontend:
   phases:
     preBuild:
       commands:
+        - echo "Installing dependencies..."
         - npm ci
     build:
       commands:
+        - echo "Building frontend..."
         - npm run build
   artifacts:
     baseDirectory: dist/public

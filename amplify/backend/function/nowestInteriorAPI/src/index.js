@@ -1,69 +1,55 @@
-// This is the entry point for your Lambda function
-// Amplify will automatically bundle your Express app
-
-const serverless = require('serverless-http');
 const express = require('express');
-const path = require('path');
+const serverless = require('serverless-http');
+const cors = require('cors');
 
 const app = express();
+
+// Enable CORS for all routes
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
-// Serve static files
-app.use(express.static(path.join(__dirname, 'public')));
 
 // Health check endpoint
 app.get('/health', (req, res) => {
   res.status(200).json({ 
     status: 'OK', 
     timestamp: new Date().toISOString(),
-    environment: process.env.NODE_ENV,
-    region: process.env.AWS_REGION || 'unknown'
+    environment: process.env.NODE_ENV || 'production'
   });
 });
 
-// Import your routes (you'll need to adapt this for Amplify)
-// For now, we'll create a simple API structure
-
-// Products API
+// Import your existing routes
+// Note: You'll need to adapt your existing routes for serverless
 app.get('/api/products', (req, res) => {
-  res.json({ message: 'Products API endpoint', products: [] });
+  // Your existing product logic here
+  res.json({ message: 'Products endpoint - implement your logic' });
 });
 
-// Portfolio API
 app.get('/api/portfolio', (req, res) => {
-  res.json({ message: 'Portfolio API endpoint', portfolio: [] });
+  // Your existing portfolio logic here
+  res.json({ message: 'Portfolio endpoint - implement your logic' });
 });
 
-// Admin login
+app.post('/api/leads', (req, res) => {
+  // Your existing lead creation logic here
+  res.json({ message: 'Lead creation endpoint - implement your logic' });
+});
+
+// Admin routes
 app.post('/api/admin/login', (req, res) => {
-  const { username, password } = req.body;
-  if (username === 'admin' && password === 'admin123') {
-    res.json({ message: 'Login successful', user: { username: 'admin' } });
-  } else {
-    res.status(401).json({ message: 'Invalid credentials' });
-  }
+  // Your existing admin login logic here
+  res.json({ message: 'Admin login endpoint - implement your logic' });
 });
 
-// Catch-all handler for SPA
+// Catch-all for undefined routes
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  res.status(404).json({ error: 'Route not found' });
 });
 
-// Error handling middleware
-app.use((err, req, res, next) => {
-  console.error('Lambda error:', err);
-  const status = err.status || err.statusCode || 500;
-  const message = err.message || 'Internal Server Error';
-  
-  res.status(status).json({ 
-    message,
-    timestamp: new Date().toISOString(),
-    path: req.path
-  });
-});
-
-// Export the handler for Amplify
-exports.handler = serverless(app, {
-  binary: ['image/*', 'application/pdf', 'application/octet-stream']
-});
+// Export the serverless handler
+module.exports.handler = serverless(app);
