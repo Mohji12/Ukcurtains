@@ -1,7 +1,5 @@
 // API Configuration
-export const API_BASE_URL = process.env.NODE_ENV === 'production' 
-  ? 'https://your-app-runner-url.ap-south-1.awsapprunner.com' // Replace with your actual App Runner URL
-  : 'http://localhost:5000';
+export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://nd5yby5xpbnf6lfh7742ajtkzm0uyuaq.lambda-url.ap-south-1.on.aws';
 
 export const API_ENDPOINTS = {
   // Public endpoints
@@ -9,7 +7,7 @@ export const API_ENDPOINTS = {
   PORTFOLIO: '/api/portfolio',
   LEADS: '/api/leads',
   BROCHURES: '/api/brochures',
-  SEO: '/api/seo',
+  SEO: '/api/seo/home', // Fixed: requires page parameter
   PAGEVIEW: '/api/pageview',
   HEALTH: '/health',
   
@@ -22,5 +20,5 @@ export const API_ENDPOINTS = {
   ADMIN_LEADS: '/api/admin/leads',
   ADMIN_SEO: '/api/admin/seo',
   ADMIN_BROCHURES: '/api/admin/brochures',
-  ADMIN_ANALYTICS: '/api/admin/analytics',
+  ADMIN_ANALYTICS: '/api/analytics/stats', // Fixed: matches backend endpoint
 } as const;

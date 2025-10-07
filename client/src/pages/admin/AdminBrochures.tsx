@@ -12,11 +12,12 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Plus, Pencil, Trash2, FileText, ExternalLink } from "lucide-react";
+import { API_BASE_URL } from "@/lib/config";
 
 const brochureSchema = z.object({
   title: z.string().min(1, "Title is required"),
   description: z.string().min(1, "Description is required"),
-  pdfPath: z.string().min(1, "PDF path is required"),
+  pdf_path: z.string().min(1, "PDF path is required"),
 });
 
 type BrochureFormData = z.infer<typeof brochureSchema>;
@@ -25,10 +26,27 @@ interface Brochure {
   id: string;
   title: string;
   description: string;
-  pdfPath: string;
-  createdAt: string;
-  updatedAt: string;
+  pdf_path: string;
+  created_at: string;
+  updated_at: string;
 }
+
+// Helper function to get brochure PDF URL
+const getBrochurePdfUrl = (brochure: Brochure): string => {
+  if (brochure.pdf_path) {
+    // If it's a full URL (external), return as is
+    if (brochure.pdf_path.startsWith('http')) {
+      return brochure.pdf_path;
+    }
+    // If it's a local path, prefix with backend URL
+    if (brochure.pdf_path.startsWith('/')) {
+      return `${API_BASE_URL}/attached_assets${brochure.pdf_path}`;
+    }
+    // If it's a relative path, prefix with backend URL
+    return `${API_BASE_URL}/attached_assets/${brochure.pdf_path}`;
+  }
+  return '';
+};
 
 export default function AdminBrochures() {
   const { toast } = useToast();
@@ -44,7 +62,7 @@ export default function AdminBrochures() {
     defaultValues: {
       title: "",
       description: "",
-      pdfPath: "",
+      pdf_path: "",
     },
   });
 
@@ -110,7 +128,7 @@ export default function AdminBrochures() {
     form.reset({
       title: brochure.title,
       description: brochure.description,
-      pdfPath: brochure.pdfPath,
+      pdf_path: brochure.pdf_path,
     });
     setIsDialogOpen(true);
   };
@@ -120,7 +138,7 @@ export default function AdminBrochures() {
     form.reset({
       title: "",
       description: "",
-      pdfPath: "",
+      pdf_path: "",
     });
     setIsDialogOpen(true);
   };
@@ -190,7 +208,7 @@ export default function AdminBrochures() {
 
                 <FormField
                   control={form.control}
-                  name="pdfPath"
+                  name="pdf_path"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>PDF Path</FormLabel>
@@ -234,7 +252,7 @@ export default function AdminBrochures() {
                     <CardTitle className="mb-2">{brochure.title}</CardTitle>
                     <CardDescription>{brochure.description}</CardDescription>
                     <p className="text-sm text-muted-foreground mt-2">
-                      PDF: {brochure.pdfPath}
+                      PDF: {brochure.pdf_path}
                     </p>
                   </div>
                 </div>
@@ -245,7 +263,7 @@ export default function AdminBrochures() {
                     asChild
                     data-testid={`button-preview-${brochure.id}`}
                   >
-                    <a href={brochure.pdfPath} target="_blank" rel="noopener noreferrer">
+                    <a href={getBrochurePdfUrl(brochure)} target="_blank" rel="noopener noreferrer">
                       <ExternalLink className="w-4 h-4" />
                     </a>
                   </Button>

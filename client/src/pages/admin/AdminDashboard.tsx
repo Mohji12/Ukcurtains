@@ -10,25 +10,25 @@ export default function AdminDashboard() {
   const metrics = [
     {
       title: "Total Products",
-      value: (stats as any)?.totalProducts || 0,
+      value: (stats as any)?.total_products || 0,
       icon: Package,
       description: "Active products",
     },
     {
       title: "Portfolio Items",
-      value: (stats as any)?.totalPortfolio || 0,
+      value: (stats as any)?.total_portfolio || 0,
       icon: Grid3x3,
       description: "Showcase projects",
     },
     {
       title: "New Leads",
-      value: (stats as any)?.newLeads || 0,
+      value: (stats as any)?.new_leads || 0,
       icon: Users,
       description: "Awaiting contact",
     },
     {
       title: "Page Views (30d)",
-      value: (stats as any)?.pageViews30Days || 0,
+      value: (stats as any)?.page_views_30_days || 0,
       icon: Eye,
       description: "Last 30 days",
     },

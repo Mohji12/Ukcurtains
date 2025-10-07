@@ -13,6 +13,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Plus, Pencil, Trash2 } from "lucide-react";
+import { API_BASE_URL } from "@/lib/config";
 
 const productSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -23,6 +24,23 @@ const productSchema = z.object({
 });
 
 type ProductFormData = z.infer<typeof productSchema>;
+
+// Helper function to get product image URL
+const getProductImageUrl = (product: any): string => {
+  if (product.image) {
+    // If it's a full URL (external), return as is
+    if (product.image.startsWith('http')) {
+      return product.image;
+    }
+    // If it's a local path, prefix with backend URL
+    if (product.image.startsWith('/')) {
+      return `${API_BASE_URL}/attached_assets${product.image}`;
+    }
+    // If it's a relative path, prefix with backend URL
+    return `${API_BASE_URL}/attached_assets/${product.image}`;
+  }
+  return '';
+};
 
 export default function AdminProducts() {
   const { toast } = useToast();
@@ -261,7 +279,7 @@ export default function AdminProducts() {
               {product.image && (
                 <div className="mb-4">
                   <img 
-                    src={product.image} 
+                    src={getProductImageUrl(product)} 
                     alt={product.name}
                     className="w-full h-32 object-cover rounded-md"
                     onError={(e) => {

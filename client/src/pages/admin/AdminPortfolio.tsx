@@ -12,6 +12,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Plus, Pencil, Trash2 } from "lucide-react";
+import { API_BASE_URL } from "@/lib/config";
 
 const portfolioSchema = z.object({
   title: z.string().min(1, "Title is required"),
@@ -23,6 +24,23 @@ const portfolioSchema = z.object({
 });
 
 type PortfolioFormData = z.infer<typeof portfolioSchema>;
+
+// Helper function to get portfolio image URL
+const getPortfolioImageUrl = (item: any): string => {
+  if (item.image) {
+    // If it's a full URL (external), return as is
+    if (item.image.startsWith('http')) {
+      return item.image;
+    }
+    // If it's a local path, prefix with backend URL
+    if (item.image.startsWith('/')) {
+      return `${API_BASE_URL}/attached_assets${item.image}`;
+    }
+    // If it's a relative path, prefix with backend URL
+    return `${API_BASE_URL}/attached_assets/${item.image}`;
+  }
+  return '';
+};
 
 export default function AdminPortfolio() {
   const { toast } = useToast();
@@ -242,6 +260,18 @@ export default function AdminPortfolio() {
               {item.client && <CardDescription>{item.client}</CardDescription>}
             </CardHeader>
             <CardContent>
+              {item.image && (
+                <div className="mb-4">
+                  <img 
+                    src={getPortfolioImageUrl(item)} 
+                    alt={item.title}
+                    className="w-full h-32 object-cover rounded-md"
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none';
+                    }}
+                  />
+                </div>
+              )}
               <p className="text-sm text-muted-foreground line-clamp-3 mb-4">{item.description}</p>
               <div className="flex gap-2">
                 <Button variant="outline" size="sm" onClick={() => openEditDialog(item)} data-testid={`button-edit-${item.id}`}>

@@ -4,6 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ChevronRight, Building2, School, Trophy, Hospital, Star, FileText, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { API_BASE_URL } from '@/lib/config';
 
 import woodVenetianImg from '@assets/stock_images/wooden_venetian_blin_7e7829a6.jpg';
 import visionBlindsImg from '@assets/stock_images/vision_blinds_day_an_8fbcb2d3.jpg';
@@ -54,9 +55,9 @@ interface Brochure {
   id: string;
   title: string;
   description: string;
-  pdfPath: string;
-  createdAt: string;
-  updatedAt: string;
+  pdf_path: string;
+  created_at: string;
+  updated_at: string;
 }
 
 // Fallback images for products without database images
@@ -102,7 +103,18 @@ const productImageMap: Record<string, string> = {
 
 // Helper function to get product image
 const getProductImage = (product: Product): string => {
-  if (product.image) return product.image;
+  if (product.image) {
+    // If it's a full URL (external), return as is
+    if (product.image.startsWith('http')) {
+      return product.image;
+    }
+    // If it's a local path, prefix with backend URL
+    if (product.image.startsWith('/')) {
+      return `${API_BASE_URL}/attached_assets${product.image}`;
+    }
+    // If it's a relative path, prefix with backend URL
+    return `${API_BASE_URL}/attached_assets/${product.image}`;
+  }
   
   const nameKey = product.name.toLowerCase();
   for (const [key, img] of Object.entries(productImageMap)) {
@@ -110,6 +122,24 @@ const getProductImage = (product: Product): string => {
   }
   
   return woodVenetianImg; // Default fallback
+};
+
+// Helper function to get brochure PDF URL
+const getBrochurePdfUrl = (brochure: Brochure): string => {
+  if (brochure.pdf_path) {
+    // If it's a full URL (external), return as is
+    if (brochure.pdf_path.startsWith('http')) {
+      return brochure.pdf_path;
+    }
+    // If it's a local path, prefix with backend URL
+    if (brochure.pdf_path.startsWith('/')) {
+      return `${API_BASE_URL}/attached_assets${brochure.pdf_path}`;
+    }
+    // If it's a relative path, prefix with backend URL
+    return `${API_BASE_URL}/attached_assets/${brochure.pdf_path}`;
+  }
+  
+  return ''; // No fallback for PDFs
 };
 
 export default function Products() {
@@ -364,14 +394,14 @@ export default function Products() {
                               </DialogHeader>
                               <div className="flex-1 min-h-0 px-4 pb-4 sm:px-6 sm:pb-6">
                                 <iframe
-                                  src={brochure.pdfPath}
+                                  src={getBrochurePdfUrl(brochure)}
                                   className="w-full h-full rounded-none sm:rounded-md border-0"
                                   title={brochure.title}
                                   data-testid={`pdf-viewer-${brochure.id}`}
                                   onError={(e) => {
                                     console.error('PDF iframe failed to load:', e);
                                     // Fallback: try to open in new tab
-                                    window.open(brochure.pdfPath, '_blank');
+                                    window.open(getBrochurePdfUrl(brochure), '_blank');
                                   }}
                                 />
                               </div>
@@ -385,7 +415,7 @@ export default function Products() {
                           asChild
                           data-testid={`button-download-${brochure.id}`}
                         >
-                          <a href={brochure.pdfPath} target="_blank" rel="noopener noreferrer" download>
+                          <a href={getBrochurePdfUrl(brochure)} target="_blank" rel="noopener noreferrer" download>
                             <ExternalLink className="w-4 h-4" />
                           </a>
                         </Button>

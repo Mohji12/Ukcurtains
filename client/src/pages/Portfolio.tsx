@@ -4,6 +4,7 @@ import PortfolioGrid from '@/components/PortfolioGrid';
 import SimpleProjectDetail from '@/components/SimpleProjectDetail';
 import { Button } from '@/components/ui/button';
 import { Loader2 } from 'lucide-react';
+import { API_BASE_URL } from '@/lib/config';
 
 // Import fallback images
 import sheerImage from '@assets/generated_images/Luxury_sheer_curtains_hero_53aa2ee0.png';
@@ -41,7 +42,18 @@ const portfolioImageMap: Record<string, string> = {
 
 // Helper function to get portfolio image
 const getPortfolioImage = (item: PortfolioItem): string => {
-  if (item.image) return item.image;
+  if (item.image) {
+    // If it's a full URL (external), return as is
+    if (item.image.startsWith('http')) {
+      return item.image;
+    }
+    // If it's a local path, prefix with backend URL
+    if (item.image.startsWith('/')) {
+      return `${API_BASE_URL}/attached_assets${item.image}`;
+    }
+    // If it's a relative path, prefix with backend URL
+    return `${API_BASE_URL}/attached_assets/${item.image}`;
+  }
   
   const titleKey = item.title.toLowerCase();
   const categoryKey = item.category?.toLowerCase() || '';

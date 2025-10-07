@@ -70,9 +70,13 @@ export default function AdminLeads() {
     );
   }
 
-  const sortedLeads = (leads as any[])?.sort((a, b) => 
-    new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-  ) || [];
+  const sortedLeads = (leads as any[])?.sort((a, b) => {
+    const dateA = new Date(a.created_at || a.createdAt);
+    const dateB = new Date(b.created_at || b.createdAt);
+    const timeA = isNaN(dateA.getTime()) ? 0 : dateA.getTime();
+    const timeB = isNaN(dateB.getTime()) ? 0 : dateB.getTime();
+    return timeB - timeA;
+  }) || [];
 
   return (
     <div className="space-y-6">
@@ -137,7 +141,14 @@ export default function AdminLeads() {
                     )}
                     <span className="flex items-center gap-1.5">
                       <Clock className="h-3.5 w-3.5" />
-                      {formatDistance(new Date(lead.createdAt), new Date(), { addSuffix: true })}
+                      {(() => {
+                        try {
+                          const date = new Date(lead.created_at || lead.createdAt);
+                          return isNaN(date.getTime()) ? 'Unknown date' : formatDistance(date, new Date(), { addSuffix: true });
+                        } catch {
+                          return 'Unknown date';
+                        }
+                      })()}
                     </span>
                   </CardDescription>
                 </div>
@@ -189,7 +200,14 @@ export default function AdminLeads() {
                               Submitted
                             </div>
                             <p className="text-lg font-semibold">
-                              {format(new Date(lead.createdAt), 'PPpp')}
+                              {(() => {
+                                try {
+                                  const date = new Date(lead.created_at || lead.createdAt);
+                                  return isNaN(date.getTime()) ? 'Unknown date' : format(date, 'PPpp');
+                                } catch {
+                                  return 'Unknown date';
+                                }
+                              })()}
                             </p>
                           </div>
                         </div>

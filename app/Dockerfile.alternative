@@ -1,0 +1,23 @@
+FROM public.ecr.aws/lambda/python:3.11
+
+# Set working directory
+WORKDIR ${LAMBDA_TASK_ROOT}
+
+# Copy requirements and install dependencies in one step
+COPY requirements.txt .
+RUN pip install --upgrade pip
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Verify key packages are installed
+RUN python -c "import fastapi; print('FastAPI version:', fastapi.__version__)"
+RUN python -c "import mangum; print('Mangum imported successfully')"
+RUN python -c "import sqlalchemy; print('SQLAlchemy version:', sqlalchemy.__version__)"
+
+# Copy application code
+COPY . .
+
+# Final verification
+RUN python -c "import main; print('Main module imported successfully')"
+
+# Set the CMD to your handler
+CMD ["main.handler"]
