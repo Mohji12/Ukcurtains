@@ -27,7 +27,11 @@ class Settings(BaseSettings):
     debug: bool = True
     
     # CORS settings
-    allowed_origins: list[str] = ["*"]
+    allowed_origins: list[str] = [
+        "http://localhost:5173",  # Local development
+        "https://master.d3d3uycjtq0cwh.amplifyapp.com",  # AWS Amplify production
+        "*"  # Fallback for other origins
+    ]
     allowed_methods: list[str] = ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
     allowed_headers: list[str] = ["*"]
     
